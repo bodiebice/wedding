@@ -1,53 +1,36 @@
-import Link from "next/link";
-
-import { LatestPost } from "~/app/_components/post";
-import { api, HydrateClient } from "~/trpc/server";
-
 export default async function Home() {
-  const hello = await api.post.hello({ text: "from tRPC" });
-
-  void api.post.getLatest.prefetch();
-
   return (
-    <HydrateClient>
-      <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
-        <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16">
-          <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
-            Create <span className="text-[hsl(280,100%,70%)]">T3</span> App
-          </h1>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
-            <Link
-              className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 hover:bg-white/20"
-              href="https://create.t3.gg/en/usage/first-steps"
-              target="_blank"
-            >
-              <h3 className="text-2xl font-bold">First Steps →</h3>
-              <div className="text-lg">
-                Just the basics - Everything you need to know to set up your
-                database and authentication.
-              </div>
-            </Link>
-            <Link
-              className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 hover:bg-white/20"
-              href="https://create.t3.gg/en/introduction"
-              target="_blank"
-            >
-              <h3 className="text-2xl font-bold">Documentation →</h3>
-              <div className="text-lg">
-                Learn more about Create T3 App, the libraries it uses, and how
-                to deploy it.
-              </div>
-            </Link>
-          </div>
-          <div className="flex flex-col items-center gap-2">
-            <p className="text-2xl text-white">
-              {hello ? hello.greeting : "Loading tRPC query..."}
-            </p>
-          </div>
+    <main className="min-h-screen bg-neutral-950 text-neutral-100">
+      <div className="mx-auto max-w-6xl px-4 py-20">
+        <header className="text-center">
+          <p className="text-xs uppercase tracking-[0.2em] text-[#b54714]/80">Our story</p>
+          <h1 className="mt-2 text-5xl tracking-tight font-[var(--font-serif)]">Bodie & Abby</h1>
+          <p className="mt-3 text-neutral-400 max-w-2xl mx-auto">Two lives, one adventure. Here’s a glimpse into our journey together — from the first hello to a lifetime of tomorrows.</p>
+        </header>
 
-          <LatestPost />
-        </div>
-      </main>
-    </HydrateClient>
+        <section className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="col-span-2 rounded-2xl overflow-hidden ring-1 ring-white/10 bg-white/5">
+            <div className="aspect-[16/9] bg-neutral-800"></div>
+          </div>
+          <div className="rounded-2xl overflow-hidden ring-1 ring-white/10 bg-white/5">
+            <div className="aspect-[3/4] bg-neutral-800"></div>
+          </div>
+          <div className="rounded-2xl overflow-hidden ring-1 ring-white/10 bg-white/5">
+            <div className="aspect-[3/4] bg-neutral-800"></div>
+          </div>
+          <div className="col-span-2 rounded-2xl overflow-hidden ring-1 ring-white/10 bg-white/5">
+            <div className="aspect-[16/9] bg-neutral-800"></div>
+          </div>
+        </section>
+
+        <section className="mt-16 text-center">
+          <a href="/savethedate" className="inline-flex items-center px-8 py-3 rounded-xl bg-[#30703d] text-white font-medium hover:bg-[#2a5f35] transition-colors">Save the Date</a>
+        </section>
+
+        <footer className="mt-20 border-t border-white/10 pt-8 text-center text-neutral-400 text-sm">
+          Questions? Email <a className="text-[#b54714] hover:text-[#a54012]" href="mailto:bodieandabbybice@gmail.com">bodieandabbybice@gmail.com</a>
+        </footer>
+      </div>
+    </main>
   );
 }
