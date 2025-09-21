@@ -2,44 +2,46 @@
 // https://orm.drizzle.team/docs/sql-schema-declaration
 
 import { sql } from "drizzle-orm";
-import { sqliteTableCreator, int, text } from "drizzle-orm/sqlite-core";
+import { pgTableCreator, integer, text, varchar, boolean, timestamp } from "drizzle-orm/pg-core";
 /*
  * This is an example of how to use the multi-project schema feature of Drizzle ORM. Use the same
  * database instance for multiple projects.
  *
  * @see https://orm.drizzle.team/docs/goodies#multi-project-schema
  */
-export const table = sqliteTableCreator((name) => `wedding_${name}`);
+export const table = pgTableCreator((name) => `wedding_${name}`);
 
 export const guests = table(
   "guests",
   {
-    id: text("id", { length: 255 })
+    id: varchar("id", { length: 255 })
       .notNull()
       .primaryKey()
       .$defaultFn(() => crypto.randomUUID()),
-    familyName: text("family_name", { length: 255 }).notNull(),
-    email: text("email", { length: 255 }).notNull(),
-    phone: text("phone", { length: 255 }).notNull(),
-    address: text("address", { length: 255 }).notNull(),
-    city: text("city", { length: 255 }).notNull(),
-    state: text("state", { length: 255 }).notNull(),
-    zip: text("zip", { length: 255 }).notNull(),
-    partySize: int("party_size"),
-    rsvpStatus: int("rsvp_status", {mode: "boolean"}).default(false),
+    familyName: varchar("family_name", { length: 255 }).notNull(),
+    email: varchar("email", { length: 255 }).notNull(),
+    phone: varchar("phone", { length: 255 }).notNull(),
+    address: text("address").notNull(),
+    city: varchar("city", { length: 255 }).notNull(),
+    state: varchar("state", { length: 255 }).notNull(),
+    zip: varchar("zip", { length: 255 }).notNull(),
+    partySize: integer("party_size"),
+    rsvpStatus: boolean("rsvp_status").default(false),
   }
 );
 
 export const addressSubmissions = table(
   "address_submissions",
   {
-    id: text("id", { length: 255 })
+    id: varchar("id", { length: 255 })
       .notNull()
       .primaryKey()
       .$defaultFn(() => crypto.randomUUID()),
-    name: text("name", { length: 255 }),
-    addressText: text("address_text", { length: 2048 }).notNull(),
-    createdAt: text("created_at").notNull().default(sql`CURRENT_TIMESTAMP`),
+    name: varchar("name", { length: 255 }),
+    addressText: text("address_text").notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .default(sql`CURRENT_TIMESTAMP`),
   }
 );
 
