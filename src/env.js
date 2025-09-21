@@ -7,8 +7,9 @@ export const env = createEnv({
    * isn't built with invalid env vars.
    */
   server: {
-    DATABASE_URL: z.string().url(),
-    DIRECT_URL: z.string().url().optional(),
+    // Accept Prisma Accelerate schemes (e.g., prisma+postgres://) and standard URLs
+    DATABASE_URL: z.string(),
+    DIRECT_URL: z.string().optional(),
     NODE_ENV: z
       .enum(["development", "test", "production"])
       .default("development"),
