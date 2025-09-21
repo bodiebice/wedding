@@ -7,7 +7,7 @@ import { TRPCReactProvider } from "~/trpc/react";
 
 export const metadata: Metadata = {
   title: "Bodie & Abby's Wedding - Save the Date",
-  description: "Join us as we celebrate our special day! October 17th, 2026. Save the date and share your contact information.",
+  description: "Join us as we celebrate our special day! October 17th, 2026.",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
