@@ -28,13 +28,13 @@ export default function Success() {
             Thank You!
           </h1>
           <p className="text-gray-600 mb-6 leading-relaxed">
-            We've received your information and will keep you updated about our wedding plans. 
-            We can't wait to celebrate with you!
+            We&apos;ve received your information and will keep you updated about our wedding plans. 
+            We can&apos;t wait to celebrate with you!
           </p>
 
           {/* Wedding Details Reminder */}
           <div className="rounded-2xl bg-white p-6 ring-1 ring-neutral-200 shadow-sm mb-6">
-            <h2 className="font-medium text-gray-900 mb-2">Don't forget to save the date:</h2>
+            <h2 className="font-medium text-gray-900 mb-2">Don&apos;t forget to save the date:</h2>
             <p className="text-xl font-semibold text-gray-900">October 17th, 2026</p>
             <p className="text-sm text-gray-600 mt-1">Saturday at 2:00 PM</p>
           </div>

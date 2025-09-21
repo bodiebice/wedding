@@ -18,7 +18,7 @@ export default function Countdown({ dateISO }: { dateISO: string }) {
   useEffect(() => {
     const id = setInterval(() => setT(getTimeParts(target)), 60_000);
     return () => clearInterval(id);
-  }, [dateISO]);
+  }, [target]);
 
   return (
     <div className="mt-6 flex items-center justify-center gap-4 text-center">

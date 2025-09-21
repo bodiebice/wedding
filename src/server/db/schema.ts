@@ -1,13 +1,8 @@
 // Example model schema from the Drizzle docs
 // https://orm.drizzle.team/docs/sql-schema-declaration
 
-import { relations, sql,} from "drizzle-orm";
-import { sqliteTableCreator, 
-  int,
-  text,
-  uniqueIndex
-} from "drizzle-orm/sqlite-core";
-import * as t from "drizzle-orm/sqlite-core";
+import { sql } from "drizzle-orm";
+import { sqliteTableCreator, int, text } from "drizzle-orm/sqlite-core";
 /*
  * This is an example of how to use the multi-project schema feature of Drizzle ORM. Use the same
  * database instance for multiple projects.

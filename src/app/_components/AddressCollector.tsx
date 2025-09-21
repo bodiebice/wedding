@@ -77,7 +77,7 @@ export default function AddressCollector() {
             className={`w-full px-4 py-3 border rounded-xl bg-white ring-1 ring-inset ring-neutral-200 focus:outline-none focus:ring-2 focus:ring-[#30703d] focus:border-[#30703d] transition-colors placeholder-gray-500 text-gray-900 ${
               errors.familyName ? "border-red-300 ring-red-300" : "border-transparent"
             }`}
-            placeholder="The Smith Family"
+            placeholder="The Bice Family"
           />
           {errors.familyName && (
             <p className="mt-1 text-sm text-red-600">{errors.familyName}</p>
@@ -97,7 +97,7 @@ export default function AddressCollector() {
             className={`w-full px-4 py-3 border rounded-xl bg-white ring-1 ring-inset ring-neutral-200 focus:outline-none focus:ring-2 focus:ring-[#30703d] focus:border-[#30703d] transition-colors placeholder-gray-500 text-gray-900 ${
               errors.email ? "border-red-300 ring-red-300" : "border-transparent"
             }`}
-            placeholder="family@example.com"
+            placeholder="email@gmail.com"
           />
           {errors.email && (
             <p className="mt-1 text-sm text-red-600">{errors.email}</p>
@@ -117,7 +117,7 @@ export default function AddressCollector() {
             className={`w-full px-4 py-3 border rounded-xl bg-white ring-1 ring-inset ring-neutral-200 focus:outline-none focus:ring-2 focus:ring-[#30703d] focus:border-[#30703d] transition-colors placeholder-gray-500 text-gray-900 ${
               errors.phone ? "border-red-300 ring-red-300" : "border-transparent"
             }`}
-            placeholder="(555) 123-4567"
+            placeholder="(555) 867-5309"
           />
           {errors.phone && (
             <p className="mt-1 text-sm text-red-600">{errors.phone}</p>
@@ -157,7 +157,7 @@ export default function AddressCollector() {
             className={`w-full px-4 py-3 border rounded-xl bg-white ring-1 ring-inset ring-neutral-200 focus:outline-none focus:ring-2 focus:ring-[#30703d] focus:border-[#30703d] transition-colors placeholder-gray-500 text-gray-900 ${
               errors.city ? "border-red-300 ring-red-300" : "border-transparent"
             }`}
-            placeholder="Beautiful City"
+            placeholder="Waseca"
           />
           {errors.city && (
             <p className="mt-1 text-sm text-red-600">{errors.city}</p>
@@ -197,7 +197,7 @@ export default function AddressCollector() {
             className={`w-full px-4 py-3 border rounded-xl bg-white ring-1 ring-inset ring-neutral-200 focus:outline-none focus:ring-2 focus:ring-[#30703d] focus:border-[#30703d] transition-colors placeholder-gray-500 text-gray-900 ${
               errors.zip ? "border-red-300 ring-red-300" : "border-transparent"
             }`}
-            placeholder="ZIP CODE"
+            placeholder="12345"
           />
           {errors.zip && (
             <p className="mt-1 text-sm text-red-600">{errors.zip}</p>

@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 export default function CalendarDownload() {
-  const [copied, setCopied] = useState(false);
+  // no local copy state needed
 
   // Wedding details - you can customize these
   const weddingDate = "20261017T200000Z"; // October 17th, 2026 at 2:00 PM CST (which is 8:00 PM UTC)
@@ -41,15 +41,7 @@ END:VCALENDAR`;
     document.body.removeChild(link);
   };
 
-  const copyToClipboard = async (text: string) => {
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch (err) {
-      console.error('Failed to copy: ', err);
-    }
-  };
+  // clipboard actions are handled in dedicated components elsewhere
 
   return (
     <div className="space-y-6">

@@ -1,4 +1,4 @@
-import { api, HydrateClient } from "~/trpc/server";
+import { HydrateClient } from "~/trpc/server";
 import AddressCollector from "../_components/AddressCollector";
 import CalendarDownload from "../_components/CalendarDownload";
 import Countdown from "../_components/Countdown";
@@ -71,7 +71,7 @@ export default async function SaveTheDate() {
               Help Us Stay Connected
             </h2>
             <p className="text-center text-gray-500 mt-2">
-              Please share your contact information so we can send you updates and invitations.
+              Please share your contact information with us so we can send you a detailed invitation!
             </p>
             <AddressCollector />
           </div>
@@ -80,8 +80,8 @@ export default async function SaveTheDate() {
         {/* Footer */}
         <div className="border-t border-neutral-200 py-12">
           <div className="mx-auto max-w-4xl px-4 text-center">
-            <p className="text-lg text-gray-900 font-medium">
-              We can't wait to celebrate with you!
+            <p className="text-lg text-white font-medium">
+              We can&apos;t wait to celebrate with you!
             </p>
             <p className="mt-2 text-sm text-gray-500">
               Questions? Contact us at <span className="text-[#30703d]">bodieandabbybice@gmail.com</span>
