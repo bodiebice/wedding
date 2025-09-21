@@ -1,10 +1,13 @@
 import Image from "next/image";
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 export default async function Home() {
   return (
+    
     <main className="min-h-screen">
       <div className="mx-auto max-w-6xl px-4 py-20">
         <header className="text-center">
+          <SpeedInsights />
           <p className="text-xs uppercase tracking-[0.2em] text-[#b54714]/80">Our story</p>
           <h1 className="mt-2 text-5xl tracking-tight font-[var(--font-serif)]">Bodie & Abby</h1>
           <p className="mt-3 text-neutral-400 max-w-2xl mx-auto">Two lives, one adventure. Here’s a glimpse into our journey together — from the first hello to a lifetime of tomorrows.</p>
