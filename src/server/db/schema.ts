@@ -35,4 +35,17 @@ export const guests = table(
   }
 );
 
+export const addressSubmissions = table(
+  "address_submissions",
+  {
+    id: text("id", { length: 255 })
+      .notNull()
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID()),
+    name: text("name", { length: 255 }),
+    addressText: text("address_text", { length: 2048 }).notNull(),
+    createdAt: text("created_at").notNull().default(sql`CURRENT_TIMESTAMP`),
+  }
+);
+
 

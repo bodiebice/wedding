@@ -1,11 +1,13 @@
 import { api, HydrateClient } from "~/trpc/server";
 import AddressCollector from "../_components/AddressCollector";
 import CalendarDownload from "../_components/CalendarDownload";
+import Countdown from "../_components/Countdown";
+import CopyAddressButton from "../_components/CopyAddressButton";
 
 export default async function SaveTheDate() {
   return (
     <HydrateClient>
-      <main className="min-h-screen bg-gray-700 text-neutral-100">
+      <main className="min-h-screen">
         {/* Hero Section */}
         <div className="relative overflow-hidden">
           
@@ -13,9 +15,11 @@ export default async function SaveTheDate() {
             <div className="text-center">
               <p className="mb-4 text-s uppercase tracking-[0.2em] text-[#b54714] font-bold">Save the date</p>
 
-              <div className="text-5xl sm:text-6xl tracking-tight text-white font-[var(--font-serif)]">
-                <div className="mt-2">Bodie and Abby</div>
+              {/* Monogram */}
+              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full ring-1 ring-white/20 bg-white/5">
+                <span className="font-[var(--font-serif)] text-xl">B + A</span>
               </div>
+              <div className="text-5xl sm:text-6xl tracking-tight text-white font-[var(--font-serif)]">Bodie and Abby</div>
               <div className="mt-2 text-lg text-neutral-400">
                 are getting married!
               </div>
@@ -33,7 +37,19 @@ export default async function SaveTheDate() {
                   111 Fourth St NW<br />
                   Waseca, Minnesota, 56093
                 </div>
+                <div className="mt-6 flex items-center justify-center gap-4">
+                  <a
+                    href="https://maps.apple.com/?q=Sacred+Heart+Catholic+Church+Waseca+MN"
+                    target="_blank"
+                    className="rounded-lg bg-[#30703d] px-4 py-2 text-sm text-white hover:bg-[#2a5f35]"
+                  >
+                    Open in Maps
+                  </a>
+                  <CopyAddressButton text="Sacred Heart Catholic Church, 111 Fourth St NW, Waseca, Minnesota, 56093" />
+                </div>
               </div>
+
+              <Countdown dateISO="2026-10-17T14:00:00-05:00" />
             </div>
           </div>
         </div>

@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Success() {
   return (
-    <main className="min-h-screen bg-gradient-to-b from-white to-neutral-50 flex items-center justify-center">
+    <main className="min-h-screen flex items-center justify-center">
       <div className="max-w-md mx-auto text-center px-4">
         <div className="rounded-2xl bg-white p-8 ring-1 ring-neutral-200 shadow-sm">
 

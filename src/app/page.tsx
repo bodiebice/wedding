@@ -1,6 +1,8 @@
+import Image from "next/image";
+
 export default async function Home() {
   return (
-    <main className="min-h-screen bg-neutral-950 text-neutral-100">
+    <main className="min-h-screen">
       <div className="mx-auto max-w-6xl px-4 py-20">
         <header className="text-center">
           <p className="text-xs uppercase tracking-[0.2em] text-[#b54714]/80">Our story</p>
@@ -9,17 +11,49 @@ export default async function Home() {
         </header>
 
         <section className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="col-span-2 rounded-2xl overflow-hidden ring-1 ring-white/10 bg-white/5">
-            <div className="aspect-[16/9] bg-neutral-800"></div>
+          <div className="relative col-span-2 overflow-hidden rounded-2xl ring-1 ring-white/10">
+            <div className="aspect-[16/9]"></div>
+            <Image
+              src="/engage 1.JPG"
+              alt="Engagement photo 1"
+              fill
+              className="object-cover"
+              priority
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 66vw, 66vw"
+            />
           </div>
-          <div className="rounded-2xl overflow-hidden ring-1 ring-white/10 bg-white/5">
-            <div className="aspect-[3/4] bg-neutral-800"></div>
+
+          <div className="relative overflow-hidden rounded-2xl ring-1 ring-white/10">
+            <div className="aspect-[3/4]"></div>
+            <Image
+              src="/engage 2.JPG"
+              alt="Engagement photo 2"
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 33vw"
+            />
           </div>
-          <div className="rounded-2xl overflow-hidden ring-1 ring-white/10 bg-white/5">
-            <div className="aspect-[3/4] bg-neutral-800"></div>
+
+          <div className="relative overflow-hidden rounded-2xl ring-1 ring-white/10">
+            <div className="aspect-[3/4]"></div>
+            <Image
+              src="/engage 3.JPG"
+              alt="Engagement photo 3"
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 33vw"
+            />
           </div>
-          <div className="col-span-2 rounded-2xl overflow-hidden ring-1 ring-white/10 bg-white/5">
-            <div className="aspect-[16/9] bg-neutral-800"></div>
+
+          <div className="relative col-span-2 overflow-hidden rounded-2xl ring-1 ring-white/10">
+            <div className="aspect-[16/9]"></div>
+            <Image
+              src="/engage 4.JPG"
+              alt="Engagement photo 4"
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 66vw, 66vw"
+            />
           </div>
         </section>
 
