@@ -185,7 +185,7 @@ export default function RsvpForm() {
               value={inviteInput}
               onChange={(e) => setInviteInput(e.target.value)}
               className={inputClass}
-              placeholder="e.g. SMITH-7K2Q"
+              placeholder="e.g. LASTNAME - XXXX"
               disabled={submit.isPending}
             />
           </div>
