@@ -1,5 +1,4 @@
 import { HydrateClient } from "~/trpc/server";
-import AddressCollector from "../_components/AddressCollector";
 import CalendarDownload from "../_components/CalendarDownload";
 import Countdown from "../_components/Countdown";
 import CopyAddressButton from "../_components/CopyAddressButton";
@@ -61,19 +60,6 @@ export default async function SaveTheDate() {
               Add to Your Calendar
             </h2>
             <CalendarDownload />
-          </div>
-        </div>
-
-        {/* Contact Information Section */}
-        <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
-          <div className="rounded-2xl bg-white p-8 ring-1 ring-neutral-200 shadow-sm">
-            <h2 className="text-2xl font-semibold text-center text-gray-900">
-              Help Us Stay Connected
-            </h2>
-            <p className="text-center text-gray-500 mt-2">
-              Please share your contact information with us so we can send you a detailed invitation!
-            </p>
-            <AddressCollector />
           </div>
         </div>
 

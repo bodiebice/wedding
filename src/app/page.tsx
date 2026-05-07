@@ -60,7 +60,7 @@ export default async function Home() {
         </section>
 
         <section className="mt-16 text-center">
-          <a href="/savethedate" className="inline-flex items-center px-8 py-3 rounded-xl bg-[#30703d] text-white font-medium hover:bg-[#2a5f35] transition-colors">Save the Date</a>
+          <a href="/savethedate" className="inline-flex items-center px-8 py-3 rounded-xl bg-[#30703d] text-white font-medium hover:bg-[#2a5f35] transition-colors">Wedding Information</a>
         </section>
 
         <footer className="mt-20 border-t border-white/10 pt-8 text-center text-neutral-400 text-sm">

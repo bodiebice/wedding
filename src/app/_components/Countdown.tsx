@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 function getTimeParts(target: Date) {
   const diff = target.getTime() - Date.now();
@@ -12,7 +12,7 @@ function getTimeParts(target: Date) {
 }
 
 export default function Countdown({ dateISO }: { dateISO: string }) {
-  const target = new Date(dateISO);
+  const target = useMemo(() => new Date(dateISO), [dateISO]);
   const [t, setT] = useState(() => getTimeParts(target));
 
   useEffect(() => {

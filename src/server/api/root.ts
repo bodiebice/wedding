@@ -1,4 +1,5 @@
-import { guestsRouter } from "~/server/api/routers/guests";
+import { addressesRouter } from "~/server/api/routers/addresses";
+import { rsvpRouter } from "~/server/api/routers/rsvp";
 import { createCallerFactory, createTRPCRouter } from "~/server/api/trpc";
 
 /**
@@ -7,7 +8,8 @@ import { createCallerFactory, createTRPCRouter } from "~/server/api/trpc";
  * All routers added in /api/routers should be manually added here.
  */
 export const appRouter = createTRPCRouter({
-  guests: guestsRouter,
+  addresses: addressesRouter,
+  rsvp: rsvpRouter,
 });
 
 // export type definition of API

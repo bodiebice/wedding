@@ -3,22 +3,41 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
 }
 
-model Guest {
-  id         String  @id @default(uuid())
-  familyName String
-  email      String
-  phone      String
-  address    String
-  city       String
-  state      String
-  zip        String
-  partySize  Int?
-  rsvpStatus Boolean @default(false)
+model InviteParty {
+  id             String                   @id @default(uuid())
+  inviteCode     String                   @unique
+  displayName    String?
+  maxExtraGuests Int                      @default(0)
+  guests         InvitePartyGuest[]
+  extraGuests    InvitePartyExtraGuest[]
+}
+
+model InvitePartyExtraGuest {
+  id          String      @id @default(uuid())
+  partyId     String
+  party       InviteParty @relation(fields: [partyId], references: [id], onDelete: Cascade)
+  sortOrder   Int         @default(0)
+  displayName String
+  allergies   String?
+
+  @@index([partyId])
+}
+
+model InvitePartyGuest {
+  id          String      @id @default(uuid())
+  partyId     String
+  party       InviteParty @relation(fields: [partyId], references: [id], onDelete: Cascade)
+  sortOrder   Int         @default(0)
+  displayName String
+  isAttending Boolean?
+  allergies   String?
+
+  @@index([partyId])
 }
 
 model AddressSubmission {
@@ -27,5 +46,3 @@ model AddressSubmission {
   addressText String
   createdAt   DateTime @default(now())
 }
-
-

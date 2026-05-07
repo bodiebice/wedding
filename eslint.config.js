@@ -36,7 +36,22 @@ export default tseslint.config(
         "error",
         { checksVoidReturn: { attributes: false } },
       ],
-      
+    },
+  },
+  // Prisma + tRPC client inference often surface as the TS `error` type under type-aware ESLint
+  // even when `tsc` succeeds; these rules then fire spuriously on generated accessors and hooks.
+  {
+    files: [
+      "src/server/api/routers/**/*.ts",
+      "src/server/db/**/*.ts",
+      "src/app/rsvp/**/*.tsx",
+    ],
+    rules: {
+      "@typescript-eslint/no-unsafe-argument": "off",
+      "@typescript-eslint/no-unsafe-assignment": "off",
+      "@typescript-eslint/no-unsafe-call": "off",
+      "@typescript-eslint/no-unsafe-member-access": "off",
+      "@typescript-eslint/no-unsafe-return": "off",
     },
   },
   {

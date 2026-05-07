@@ -6,11 +6,17 @@
  * TL;DR - This is where all the tRPC server stuff is created and plugged in. The pieces you will
  * need to use are documented accordingly near the end.
  */
+import type { PrismaClient } from "@prisma/client";
 import { initTRPC } from "@trpc/server";
 import superjson from "superjson";
 import { ZodError } from "zod";
 
 import { db } from "~/server/db";
+
+export type TRPCContext = {
+  db: PrismaClient;
+  headers: Headers;
+};
 
 /**
  * 1. CONTEXT
@@ -24,12 +30,12 @@ import { db } from "~/server/db";
  *
  * @see https://trpc.io/docs/server/context
  */
-export const createTRPCContext = async (opts: { headers: Headers }) => {
-  return {
-    db,
-    ...opts,
-  };
-};
+export const createTRPCContext = async (opts: {
+  headers: Headers;
+}): Promise<TRPCContext> => ({
+  db,
+  headers: opts.headers,
+});
 
 /**
  * 2. INITIALIZATION
@@ -38,7 +44,7 @@ export const createTRPCContext = async (opts: { headers: Headers }) => {
  * ZodErrors so that you get typesafety on the frontend if your procedure fails due to validation
  * errors on the backend.
  */
-const t = initTRPC.context<typeof createTRPCContext>().create({
+const t = initTRPC.context<TRPCContext>().create({
   transformer: superjson,
   errorFormatter({ shape, error }) {
     return {
