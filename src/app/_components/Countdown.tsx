@@ -21,21 +21,19 @@ export default function Countdown({ dateISO }: { dateISO: string }) {
   }, [target]);
 
   return (
-    <div className="mt-6 flex items-center justify-center gap-4 text-center">
-      <div className="min-w-20 rounded-xl bg-white/5 px-4 py-3 ring-1 ring-white/10">
-        <div className="text-2xl font-[var(--font-serif)]">{t.days}</div>
-        <div className="text-xs text-neutral-300">days</div>
+    <div className="mt-8 flex flex-wrap items-center justify-center gap-3 text-center sm:gap-4">
+      <div className="min-w-20 rounded-xl border-2 border-white/40 bg-white/95 px-4 py-3 shadow-md">
+        <div className="font-serif text-2xl text-wedding-green">{t.days}</div>
+        <div className="text-xs text-wedding-muted">days</div>
       </div>
-      <div className="min-w-20 rounded-xl bg-white/5 px-4 py-3 ring-1 ring-white/10">
-        <div className="text-2xl font-[var(--font-serif)]">{t.hours}</div>
-        <div className="text-xs text-neutral-300">hours</div>
+      <div className="min-w-20 rounded-xl border-2 border-white/40 bg-white/95 px-4 py-3 shadow-md">
+        <div className="font-serif text-2xl text-wedding-green">{t.hours}</div>
+        <div className="text-xs text-wedding-muted">hours</div>
       </div>
-      <div className="min-w-20 rounded-xl bg-white/5 px-4 py-3 ring-1 ring-white/10">
-        <div className="text-2xl font-[var(--font-serif)]">{t.minutes}</div>
-        <div className="text-xs text-neutral-300">mins</div>
+      <div className="min-w-20 rounded-xl border-2 border-white/40 bg-white/95 px-4 py-3 shadow-md">
+        <div className="font-serif text-2xl text-wedding-green">{t.minutes}</div>
+        <div className="text-xs text-wedding-muted">mins</div>
       </div>
     </div>
   );
 }
-
-

@@ -2,12 +2,10 @@ import Link from "next/link";
 
 export default function Success() {
   return (
-    <main className="min-h-screen flex items-center justify-center">
-      <div className="max-w-md mx-auto text-center px-4">
-        <div className="rounded-2xl bg-white p-8 ring-1 ring-neutral-200 shadow-sm">
-
-          {/* Success Icon */}
-          <div className="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-[#30703d] mb-6 shadow-sm">
+    <main className="flex min-h-screen items-center justify-center px-4 py-12">
+      <div className="mx-auto max-w-md text-center">
+        <div className="rounded-2xl border-2 border-wedding-ink/10 bg-white p-8 text-wedding-ink shadow-xl">
+          <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-wedding-green shadow-sm">
             <svg
               className="h-8 w-8 text-white"
               fill="none"
@@ -23,45 +21,45 @@ export default function Success() {
             </svg>
           </div>
 
-          {/* Success Message */}
-          <h1 className="text-2xl font-semibold text-gray-900 mb-4">
+          <h1 className="mb-4 font-serif text-2xl font-semibold text-wedding-ink">
             Thank You!
           </h1>
-          <p className="text-gray-600 mb-6 leading-relaxed">
-            We&apos;ve received your information and will keep you updated about our wedding plans. 
-            We can&apos;t wait to celebrate with you!
+          <p className="mb-6 leading-relaxed text-wedding-muted">
+            We&apos;ve received your information and will keep you updated about
+            our wedding plans. We can&apos;t wait to celebrate with you!
           </p>
 
-          {/* Wedding Details Reminder */}
-          <div className="rounded-2xl bg-white p-6 ring-1 ring-neutral-200 shadow-sm mb-6">
-            <h2 className="font-medium text-gray-900 mb-2">Don&apos;t forget to save the date:</h2>
-            <p className="text-xl font-semibold text-gray-900">October 17th, 2026</p>
-            <p className="text-sm text-gray-600 mt-1">Saturday at 2:00 PM</p>
+          <div className="mb-6 rounded-2xl border border-neutral-200 bg-wedding-cream/40 p-6">
+            <h2 className="mb-2 font-medium text-wedding-ink">
+              Don&apos;t forget to save the date:
+            </h2>
+            <p className="font-serif text-xl font-semibold text-wedding-ink">
+              October 17th, 2026
+            </p>
+            <p className="mt-1 text-sm text-wedding-muted">Saturday at 2:00 PM</p>
           </div>
 
-          {/* Action Buttons */}
           <div className="space-y-3">
             <Link
               href="/save-the-date"
-              className="block w-full px-6 py-3 bg-[#30703d] text-white font-semibold rounded-xl hover:bg-[#2a5f35] transition-colors shadow-sm hover:shadow-md"
+              className="block w-full rounded-full bg-wedding-green px-6 py-3 font-semibold text-white shadow-sm transition hover:bg-wedding-green-hover hover:shadow-md"
             >
               Back to Save the Date
             </Link>
             <Link
               href="/save-the-date"
-              className="block w-full px-6 py-3 ring-1 ring-inset ring-neutral-200 text-gray-700 font-semibold rounded-xl hover:bg-neutral-50 transition-colors"
+              className="block w-full rounded-full border-2 border-wedding-ink/15 px-6 py-3 font-semibold text-wedding-ink transition hover:bg-neutral-50"
             >
               Add to Calendar Again
             </Link>
           </div>
 
-          {/* Contact Info */}
-          <div className="mt-8 pt-6 border-t border-neutral-200">
-            <p className="text-sm text-gray-600">
+          <div className="mt-8 border-t border-neutral-200 pt-6">
+            <p className="text-sm text-wedding-muted">
               Questions? Contact us at{" "}
               <a
                 href="mailto:bodieandabbybice@gmail.com"
-                className="text-[#30703d] hover:text-[#2a5f35] font-medium"
+                className="font-medium text-wedding-accent transition hover:text-wedding-accent-hover"
               >
                 bodieandabbybice@gmail.com
               </a>

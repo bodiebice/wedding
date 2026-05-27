@@ -12,29 +12,32 @@ export default function RsvpPage() {
   return (
     <HydrateClient>
       <main className="min-h-screen">
-        <div className="relative mx-auto max-w-2xl px-4 py-16 sm:px-6 lg:px-8">
-          <div className="text-center mb-10">
-            <p className="mb-4 text-sm uppercase tracking-[0.2em] text-[#b54714] font-bold">
+        <div className="relative mx-auto max-w-2xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
+          <div className="mb-10 text-center">
+            <p className="mb-3 text-sm font-bold uppercase tracking-[0.2em] text-wedding-accent">
               RSVP
             </p>
-            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full ring-1 ring-white/20 bg-white/5">
-              <span className="font-[var(--font-serif)] text-xl">B + A</span>
+            <div className="mx-auto mb-5 flex h-20 w-20 items-center justify-center rounded-full border-2 border-white bg-white/10 font-serif text-2xl text-white backdrop-blur-sm">
+              B + A
             </div>
-            <h1 className="text-4xl sm:text-5xl tracking-tight text-white font-[var(--font-serif)]">
+            <h1 className="font-script text-4xl leading-tight text-white sm:text-5xl sm:leading-tight">
               We hope you can join us
             </h1>
-            <p className="mt-3 text-neutral-400">
-              October 17th, 2026 · Sacred Heart Catholic Church, Waseca, MN
+            <p className="mt-4 font-serif text-lg text-wedding-cream/90">
+              October 17th, 2026
+            </p>
+            <p className="mt-1 font-serif text-wedding-cream/80">
+              Sacred Heart Catholic Church, Waseca, MN
             </p>
           </div>
 
           <RsvpForm />
 
-          <p className="mt-12 text-center text-sm text-neutral-500">
+          <p className="mt-12 text-center text-sm text-white/80">
             Questions?{" "}
             <a
               href="mailto:bodieandabbybice@gmail.com"
-              className="text-[#30703d] hover:text-[#2a5f35]"
+              className="font-medium text-wedding-accent transition hover:text-wedding-accent-hover"
             >
               bodieandabbybice@gmail.com
             </a>

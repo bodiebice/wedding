@@ -4,4 +4,15 @@
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --font-serif: var(--font-serif), ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  --font-script: var(--font-great-vibes), "Brush Script MT", cursive;
+
+  /* Partner palette: green field, white/dark-gray surfaces, burnt orange accent */
+  --color-wedding-green: #667e64;
+  --color-wedding-green-hover: #556854;
+  --color-wedding-accent: #b54714;
+  --color-wedding-accent-hover: #a54012;
+  --color-wedding-accent-pressed: #9d3a11;
+  --color-wedding-ink: #262626;
+  --color-wedding-muted: #737373;
+  --color-wedding-cream: #f7f5f0;
 }

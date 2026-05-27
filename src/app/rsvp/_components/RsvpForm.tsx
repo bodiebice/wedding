@@ -1,6 +1,7 @@
 "use client";
 
 import { skipToken } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { normalizeInviteCode } from "~/lib/invite-code";
@@ -22,12 +23,15 @@ type ExtraRow = {
   allergies: string;
 };
 
+const pillInputClass =
+  "w-full min-w-0 flex-1 rounded-full border-2 border-wedding-ink bg-white px-5 py-3 font-serif text-wedding-ink placeholder:text-wedding-muted focus:outline-none focus:ring-2 focus:ring-wedding-green";
+
 export default function RsvpForm() {
+  const router = useRouter();
   const [inviteInput, setInviteInput] = useState("");
   const [lookupCode, setLookupCode] = useState<string | null>(null);
   const [guestRows, setGuestRows] = useState<GuestRow[]>([]);
   const [extraRows, setExtraRows] = useState<ExtraRow[]>([]);
-  const [submitDone, setSubmitDone] = useState(false);
   const [listError, setListError] = useState<string | null>(null);
 
   const lookup = api.rsvp.lookup.useQuery(
@@ -63,7 +67,9 @@ export default function RsvpForm() {
   }, [lookup.isError, lookup.error]);
 
   const submit = api.rsvp.submit.useMutation({
-    onSuccess: () => setSubmitDone(true),
+    onSuccess: () => {
+      router.push("/rsvp/complete");
+    },
   });
 
   const handleLookup = () => {
@@ -144,20 +150,7 @@ export default function RsvpForm() {
   };
 
   const inputClass =
-    "w-full px-4 py-3 border rounded-xl bg-white ring-1 ring-inset ring-neutral-200 focus:outline-none focus:ring-2 focus:ring-[#30703d] text-gray-900 placeholder-gray-500 border-transparent";
-
-  if (submitDone) {
-    return (
-      <div className="rounded-2xl bg-white/5 p-8 ring-1 ring-white/10 text-center">
-        <p className="font-[var(--font-serif)] text-2xl text-white">
-          Thank you!
-        </p>
-        <p className="mt-3 text-neutral-300">
-          Your RSVP has been saved. We can&apos;t wait to celebrate with you.
-        </p>
-      </div>
-    );
-  }
+    "w-full rounded-xl border-2 border-neutral-200 bg-white px-4 py-3 font-serif text-wedding-ink placeholder:text-wedding-muted focus:outline-none focus:ring-2 focus:ring-wedding-green";
 
   const showForm = lookup.isSuccess && lookup.data;
   const maxExtra = lookup.data?.maxExtraGuests ?? 0;
@@ -165,43 +158,48 @@ export default function RsvpForm() {
 
   return (
     <div className="space-y-8">
-      <div className="rounded-2xl bg-white/5 p-8 ring-1 ring-white/10">
-        <p className="mb-4 text-sm uppercase tracking-[0.2em] text-[#b54714] font-bold">
-          Invite code
-        </p>
-        <p className="text-sm text-neutral-400 mb-4">
-          Enter the code from your invitation (letters and numbers are fine;
+      <div className="rounded-[2rem] border-2 border-wedding-ink bg-white p-6 shadow-xl sm:p-8">
+        <p className="font-script text-3xl text-wedding-ink">Invite code</p>
+        <p className="mt-2 font-serif text-sm text-wedding-muted">
+          Please enter the code from your invitation (letters and numbers only;
           spaces are ignored).
         </p>
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-end">
-          <div className="flex-1">
-            <label htmlFor="inviteCode" className="sr-only">
-              Invite code
-            </label>
-            <input
-              id="inviteCode"
-              type="text"
-              autoComplete="off"
-              value={inviteInput}
-              onChange={(e) => setInviteInput(e.target.value)}
-              className={inputClass}
-              placeholder="e.g. LASTNAME - XXXX"
-              disabled={submit.isPending}
-            />
-          </div>
+        <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-stretch">
+          <label htmlFor="inviteCode" className="sr-only">
+            Invite code
+          </label>
+          <input
+            id="inviteCode"
+            type="text"
+            autoComplete="off"
+            value={inviteInput}
+            onChange={(e) => setInviteInput(e.target.value)}
+            className={pillInputClass}
+            placeholder="e.g. LASTNAME - XXXX"
+            disabled={submit.isPending}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                handleLookup();
+              }
+            }}
+          />
           <button
             type="button"
             onClick={handleLookup}
             disabled={submit.isPending || lookup.isFetching}
-            className="rounded-xl bg-[#30703d] px-6 py-3 text-white font-semibold hover:bg-[#2a5f35] disabled:opacity-50"
+            className="shrink-0 rounded-full border-2 border-wedding-ink bg-white px-8 py-3 font-serif font-semibold text-wedding-ink transition hover:bg-wedding-cream disabled:opacity-50"
           >
-            {lookup.isFetching ? "Checking…" : "Continue"}
+            {lookup.isFetching ? "Checking…" : "Enter"}
           </button>
         </div>
       </div>
 
       {listError ? (
-        <p className="text-sm text-red-300 px-1" role="alert">
+        <p
+          className="rounded-xl border border-red-200 bg-white px-4 py-3 text-center text-sm text-red-700"
+          role="alert"
+        >
           {listError}
         </p>
       ) : null}
@@ -209,14 +207,14 @@ export default function RsvpForm() {
       {showForm ? (
         <form
           onSubmit={handleSubmitRsvp}
-          className="rounded-2xl bg-white p-8 ring-1 ring-neutral-200 shadow-sm space-y-8"
+          className="space-y-8 rounded-[2rem] border-2 border-wedding-ink bg-white p-6 shadow-xl sm:p-8"
         >
           <div>
-            <h2 className="text-2xl text-gray-900 font-[var(--font-serif)]">
-              Your RSVP
-            </h2>
+            <h2 className="font-script text-3xl text-wedding-ink">Your RSVP</h2>
             {lookup.data.displayName ? (
-              <p className="mt-1 text-gray-600">{lookup.data.displayName}</p>
+              <p className="mt-2 font-serif text-wedding-muted">
+                {lookup.data.displayName}
+              </p>
             ) : null}
           </div>
 
@@ -224,12 +222,12 @@ export default function RsvpForm() {
             {guestRows.map((row) => (
               <div
                 key={row.id}
-                className="rounded-xl border border-neutral-200 p-4 space-y-4"
+                className="space-y-4 rounded-2xl border-2 border-neutral-200 p-4"
               >
                 <div>
                   <label
                     htmlFor={`name-${row.id}`}
-                    className="block text-sm font-medium text-gray-900 mb-1"
+                    className="mb-1 block text-sm font-medium text-wedding-ink"
                   >
                     Guest name
                   </label>
@@ -246,21 +244,21 @@ export default function RsvpForm() {
                 </div>
 
                 <fieldset>
-                  <legend className="block text-sm font-medium text-gray-900 mb-2">
+                  <legend className="mb-2 block text-sm font-medium text-wedding-ink">
                     Attending?
                   </legend>
                   <div className="flex flex-wrap gap-4">
-                    <label className="inline-flex items-center gap-2 text-sm text-gray-800">
+                    <label className="inline-flex items-center gap-2 text-sm text-wedding-ink">
                       <input
                         type="radio"
                         name={`attending-${row.id}`}
                         checked={row.isAttending === true}
                         onChange={() => updateRow(row.id, { isAttending: true })}
-                        className="text-[#30703d] focus:ring-[#30703d]"
+                        className="text-wedding-green focus:ring-wedding-green"
                       />
                       Yes
                     </label>
-                    <label className="inline-flex items-center gap-2 text-sm text-gray-800">
+                    <label className="inline-flex items-center gap-2 text-sm text-wedding-ink">
                       <input
                         type="radio"
                         name={`attending-${row.id}`}
@@ -268,7 +266,7 @@ export default function RsvpForm() {
                         onChange={() =>
                           updateRow(row.id, { isAttending: false })
                         }
-                        className="text-[#30703d] focus:ring-[#30703d]"
+                        className="text-wedding-green focus:ring-wedding-green"
                       />
                       No
                     </label>
@@ -278,7 +276,7 @@ export default function RsvpForm() {
                 <div>
                   <label
                     htmlFor={`allergy-${row.id}`}
-                    className="block text-sm font-medium text-gray-900 mb-1"
+                    className="mb-1 block text-sm font-medium text-wedding-ink"
                   >
                     Allergies or dietary notes
                   </label>
@@ -298,13 +296,13 @@ export default function RsvpForm() {
           </div>
 
           {maxExtra > 0 ? (
-            <div className="rounded-xl border border-dashed border-neutral-300 p-4 space-y-4">
+            <div className="space-y-4 rounded-2xl border-2 border-dashed border-neutral-300 p-4">
               <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
                 <div>
-                  <h3 className="text-sm font-medium text-gray-900">
+                  <h3 className="text-sm font-medium text-wedding-ink">
                     Additional guests
                   </h3>
-                  <p className="text-sm text-gray-600">
+                  <p className="text-sm text-wedding-muted">
                     Anyone joining you who isn&apos;t listed above — add up to{" "}
                     {maxExtra}. Include their name and any dietary needs.
                   </p>
@@ -313,14 +311,14 @@ export default function RsvpForm() {
                   type="button"
                   onClick={addExtraRow}
                   disabled={!canAddExtra || submit.isPending}
-                  className="shrink-0 rounded-lg border border-[#30703d] px-4 py-2 text-sm font-medium text-[#30703d] hover:bg-[#30703d]/5 disabled:opacity-50"
+                  className="shrink-0 rounded-full border-2 border-wedding-green px-4 py-2 text-sm font-medium text-wedding-green transition hover:bg-wedding-green/10 disabled:opacity-50"
                 >
                   Add guest
                 </button>
               </div>
 
               {extraRows.length === 0 ? (
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-wedding-muted">
                   No additional guests added yet.
                 </p>
               ) : (
@@ -328,10 +326,10 @@ export default function RsvpForm() {
                   {extraRows.map((row, idx) => (
                     <div
                       key={row.localKey}
-                      className="rounded-lg bg-neutral-50 p-4 ring-1 ring-neutral-200 space-y-3"
+                      className="space-y-3 rounded-xl bg-wedding-cream/50 p-4 ring-1 ring-neutral-200"
                     >
                       <div className="flex items-center justify-between gap-2">
-                        <span className="text-xs font-medium uppercase tracking-wide text-gray-500">
+                        <span className="text-xs font-medium uppercase tracking-wide text-wedding-muted">
                           Extra guest {idx + 1}
                         </span>
                         <button
@@ -346,7 +344,7 @@ export default function RsvpForm() {
                       <div>
                         <label
                           htmlFor={`extra-name-${row.localKey}`}
-                          className="block text-sm font-medium text-gray-900 mb-1"
+                          className="mb-1 block text-sm font-medium text-wedding-ink"
                         >
                           Full name
                         </label>
@@ -366,7 +364,7 @@ export default function RsvpForm() {
                       <div>
                         <label
                           htmlFor={`extra-diet-${row.localKey}`}
-                          className="block text-sm font-medium text-gray-900 mb-1"
+                          className="mb-1 block text-sm font-medium text-wedding-ink"
                         >
                           Allergies or dietary notes
                         </label>
@@ -399,7 +397,7 @@ export default function RsvpForm() {
           <button
             type="submit"
             disabled={submit.isPending}
-            className="w-full sm:w-auto rounded-xl bg-[#30703d] px-8 py-3 text-white font-semibold hover:bg-[#2a5f35] disabled:opacity-50"
+            className="w-full rounded-full bg-wedding-green px-8 py-3.5 font-serif font-semibold text-white transition hover:bg-wedding-green-hover disabled:opacity-50 sm:w-auto"
           >
             {submit.isPending ? "Saving…" : "Submit RSVP"}
           </button>

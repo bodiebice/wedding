@@ -7,70 +7,75 @@ export default async function SaveTheDate() {
   return (
     <HydrateClient>
       <main className="min-h-screen">
-        {/* Hero Section */}
-        <div className="relative overflow-hidden">
-          
-          <div className="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-            <div className="text-center">
-              <p className="mb-4 text-s uppercase tracking-[0.2em] text-[#b54714] font-bold">Save the date</p>
+        <div className="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
+          <div className="text-center">
+            <p className="mb-4 text-sm font-bold uppercase tracking-[0.2em] text-wedding-accent">
+              Save the date
+            </p>
 
-              {/* Monogram */}
-              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full ring-1 ring-white/20 bg-white/5">
-                <span className="font-[var(--font-serif)] text-xl">B + A</span>
-              </div>
-              <div className="text-5xl sm:text-6xl tracking-tight text-white font-[var(--font-serif)]">Bodie and Abby</div>
-              <div className="mt-2 text-lg text-neutral-400">
-                are getting married!
-              </div>
-              
-              {/* Details card */}
-              <div className="mt-10 rounded-2xl bg-white/5 p-8 ring-1 ring-white/10 shadow-sm">
-                <div className="text-3xl text-white font-[var(--font-serif)]">
-                  October 17th, 2026
-                </div>
-                <div className="mt-2 text-base text-neutral-400">
-                  Saturday at 2:00 PM
-                </div>
-                <div className="mt-4 text-base text-neutral-300 leading-relaxed">
-                  Sacred Heart Catholic Church<br />
-                  111 Fourth St NW<br />
-                  Waseca, Minnesota, 56093
-                </div>
-                <div className="mt-6 flex items-center justify-center gap-4">
-                  <a
-                    href="https://maps.apple.com/?q=Sacred+Heart+Catholic+Church+Waseca+MN"
-                    target="_blank"
-                    className="rounded-lg bg-[#30703d] px-4 py-2 text-sm text-white hover:bg-[#2a5f35]"
-                  >
-                    Open in Maps
-                  </a>
-                  <CopyAddressButton text="Sacred Heart Catholic Church, 111 Fourth St NW, Waseca, Minnesota, 56093" />
-                </div>
-              </div>
-
-              <Countdown dateISO="2026-10-17T14:00:00-05:00" />
+            <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full border-2 border-white bg-white/10 font-serif text-2xl text-white backdrop-blur-sm">
+              B + A
             </div>
+            <div className="font-script text-5xl leading-tight text-white sm:text-6xl sm:leading-tight">
+              Bodie and Abby
+            </div>
+            <p className="mt-3 font-serif text-lg text-wedding-cream/90">
+              are getting married!
+            </p>
+
+            <div className="mx-auto mt-10 max-w-lg rounded-2xl border-2 border-wedding-ink/10 bg-white p-8 text-wedding-ink shadow-xl">
+              <div className="font-serif text-3xl text-wedding-ink">
+                October 17th, 2026
+              </div>
+              <p className="mt-2 text-base text-wedding-muted">
+                Saturday at 2:00 PM
+              </p>
+              <p className="mt-4 font-serif text-base leading-relaxed text-wedding-ink">
+                Sacred Heart Catholic Church
+                <br />
+                111 Fourth St NW
+                <br />
+                Waseca, Minnesota, 56093
+              </p>
+              <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+                <a
+                  href="https://maps.apple.com/?q=Sacred+Heart+Catholic+Church+Waseca+MN"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="rounded-full bg-wedding-green px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-wedding-green-hover"
+                >
+                  Open in Maps
+                </a>
+                <CopyAddressButton text="Sacred Heart Catholic Church, 111 Fourth St NW, Waseca, Minnesota, 56093" />
+              </div>
+            </div>
+
+            <Countdown dateISO="2026-10-17T14:00:00-05:00" />
           </div>
         </div>
 
-        {/* Calendar Download Section */}
         <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
-          <div className="rounded-2xl bg-white p-8 ring-1 ring-neutral-200 shadow-sm">
-            <h2 className="text-2xl font-semibold text-center text-gray-900 mb-8">
+          <div className="rounded-2xl border-2 border-wedding-ink/10 bg-white p-8 text-wedding-ink shadow-xl">
+            <h2 className="mb-8 text-center font-serif text-2xl font-semibold text-wedding-ink">
               Add to Your Calendar
             </h2>
             <CalendarDownload />
           </div>
         </div>
 
-        {/* Footer */}
-        <div className="border-t border-neutral-200 py-12">
+        <div className="border-t border-white/20 py-12">
           <div className="mx-auto max-w-4xl px-4 text-center">
-            <p className="text-lg text-white font-medium">
+            <p className="font-serif text-lg font-medium text-white">
               We can&apos;t wait to celebrate with you!
             </p>
-            <p className="mt-2 text-sm text-gray-500">
-              Questions? Contact us at <span className="text-[#30703d]">bodieandabbybice@gmail.com</span>
+            <p className="mt-2 text-sm text-white/80">
+              Questions? Contact us at{" "}
+              <a
+                href="mailto:bodieandabbybice@gmail.com"
+                className="font-medium text-wedding-accent transition hover:text-wedding-accent-hover"
+              >
+                bodieandabbybice@gmail.com
+              </a>
             </p>
           </div>
         </div>

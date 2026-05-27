@@ -16,12 +16,10 @@ export default function CopyAddressButton({ text }: { text: string }) {
   return (
     <button
       onClick={handleCopy}
-      className="rounded-lg ring-1 ring-white/15 px-4 py-2 text-sm hover:bg-white/5"
+      className="rounded-full border-2 border-wedding-ink px-4 py-2.5 text-sm font-medium text-wedding-ink transition hover:bg-wedding-cream"
       type="button"
     >
       {copied ? "Copied!" : "Copy Address"}
     </button>
   );
 }
-
-

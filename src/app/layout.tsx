@@ -1,7 +1,7 @@
 import "~/styles/globals.css";
 
 import { type Metadata } from "next";
-import { Geist, Playfair_Display } from "next/font/google";
+import { Alex_Brush, Geist, Playfair_Display } from "next/font/google";
 
 import { TRPCReactProvider } from "~/trpc/react";
 import { Analytics } from "@vercel/analytics/next"
@@ -22,12 +22,21 @@ const playfair = Playfair_Display({
   variable: "--font-serif",
 });
 
+const alexBrush = Alex_Brush({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-great-vibes",
+});
+
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${geist.variable} ${playfair.variable}`}>
-      <body className="min-h-dvh bg-gray-700 text-neutral-100">
+    <html
+      lang="en"
+      className={`${geist.variable} ${playfair.variable} ${alexBrush.variable}`}
+    >
+      <body className="min-h-dvh bg-wedding-green font-sans text-white antialiased">
         <TRPCReactProvider>{children}</TRPCReactProvider>
         <Analytics />
         <SpeedInsights />
