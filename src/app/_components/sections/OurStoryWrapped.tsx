@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { type StoryStat, storyStats } from "~/lib/story-stats";
 
@@ -21,14 +20,10 @@ const headlineClasses: Record<StoryStat["accent"], string> = {
 
 type OurStoryWrappedProps = {
   stats?: StoryStat[];
-  showFullStoryLink?: boolean;
-  showHeader?: boolean;
 };
 
 export default function OurStoryWrapped({
   stats = storyStats,
-  showFullStoryLink = true,
-  showHeader = true,
 }: OurStoryWrappedProps) {
   const scrollerRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
@@ -124,18 +119,16 @@ export default function OurStoryWrapped({
 
   return (
     <section id="story" className="scroll-mt-20">
-      {showHeader ? (
-        <div className="text-center">
-          <p className="mb-2 text-sm font-bold uppercase tracking-[0.2em] text-wedding-accent">
-            Our Story
-          </p>
-          <h2 className="font-script text-4xl text-white sm:text-5xl">
-            By the numbers 
-          </h2>
-        </div>
-      ) : null}
+      <div className="text-center">
+        <p className="mb-2 text-sm font-bold uppercase tracking-[0.2em] text-wedding-accent">
+          Our Story
+        </p>
+        <h2 className="font-script text-4xl text-white sm:text-5xl">
+          By the numbers
+        </h2>
+      </div>
 
-      <div className={`relative ${showHeader ? "mt-8" : "mt-0"}`}>
+      <div className="relative mt-8">
         {canScrollLeft ? (
           <div
             className="pointer-events-none absolute inset-y-0 left-0 z-10 w-12 bg-gradient-to-r from-wedding-green to-transparent sm:w-16"

@@ -25,7 +25,7 @@ export default function SiteNav() {
     ? homeNavItems
     : [
         { label: "Home", href: "/", isRoute: true },
-        { label: "Story", href: "/story", isRoute: true },
+        { label: "Story", href: "/#story", isRoute: true },
         { label: "RSVP", href: "/rsvp", isRoute: true },
         { label: "Photos", href: "/photos", isRoute: true },
       ];
