@@ -3,7 +3,7 @@ import Link from "next/link";
 import SiteFooter from "../_components/SiteFooter";
 import SiteNav from "../_components/SiteNav";
 import OurStoryWrapped from "../_components/sections/OurStoryWrapped";
-import { storyStatsExtended } from "~/lib/story-stats";
+import { storyStats } from "~/lib/story-stats";
 
 export const metadata: Metadata = {
   title: "Our Story | Bodie & Abby's Wedding",
