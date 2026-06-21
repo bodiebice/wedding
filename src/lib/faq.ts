@@ -12,7 +12,7 @@ export const faqItems: FaqItem[] = [
   {
     question: "What is the dress code?",
     answer:
-      "Cocktail attire — feel free to dress up, but come ready to celebrate and dance!",
+      "We'd love to see you in dressy-casual attire. Please no jeans, shorts, or t-shirts.",
   },
   {
     question: "Can I bring a plus-one?",
@@ -20,9 +20,9 @@ export const faqItems: FaqItem[] = [
       "Your invitation will list everyone included on your RSVP. If you have questions about your party, please reach out to us directly.",
   },
   {
-    question: "Are children welcome?",
+    question: "What if we have food allergies/dietary restrictions?",
     answer:
-      "We love your little ones, but we've planned an adults-focused celebration. Thank you for understanding.",
+      "Our caterer will have options for guests with allergies. Please indicate on your RSVP if you have any food allergies relating to the menu.",
   },
   {
     question: "Where should I stay?",
@@ -32,6 +32,6 @@ export const faqItems: FaqItem[] = [
   {
     question: "How do I RSVP?",
     answer:
-      "Use the RSVP button and enter the invite code from your invitation. If you need help, email us and we'll get you sorted.",
+      "Use the RSVP button and enter the invite code from your invitation. If you need help, reach out to us directlyand we'll get you sorted.",
   },
 ];

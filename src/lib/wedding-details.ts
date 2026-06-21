@@ -39,7 +39,7 @@ export const weddingSchedule: ScheduleItem[] = [
   { time: "3:30", label: "Cocktail hour", icon: "cheers" },
   { time: "5:00", label: "Dinner and toasts", icon: "fork-knife" },
   { time: "6:30", label: "Special dances", icon: "music" },
-  { time: "11:00", label: "Private last dance", icon: "dance" },
+  { time: "10:50", label: "Private last dance and send off", icon: "dance" },
 ];
 
 export const weddingMenu = {
