@@ -225,16 +225,6 @@ export default function OurStoryWrapped({
         </p>
       </div>
 
-      {showFullStoryLink ? (
-        <p className="mt-6 text-center">
-          <Link
-            href="/story"
-            className="font-serif text-sm text-wedding-accent underline-offset-2 transition hover:text-wedding-accent-hover hover:underline"
-          >
-            Read our full story
-          </Link>
-        </p>
-      ) : null}
     </section>
   );
 }

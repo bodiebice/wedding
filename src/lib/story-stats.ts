@@ -6,42 +6,28 @@ export type StoryStat = {
 
 export const storyStats: StoryStat[] = [
   {
-    headline: "",
-    subtext: "The year we met — and everything changed.",
-    accent: "green",
-  },
-  {
-    headline: "First date",
-    subtext: "Coffee, laughter, and a very long goodbye.",
+    headline: "12",
+    subtext: "Seasons of TV Watched.",
     accent: "accent",
   },
   {
-    headline: "Countless adventures",
-    subtext: "Road trips, game nights, and growing together.",
+    headline: "3",
+    subtext: "Concerts/Festivals Attended.",
     accent: "cream",
   },
   {
-    headline: "Forever starts",
-    subtext: "October 17, 2026 — we can't wait to celebrate with you.",
-    accent: "ink",
-  },
-];
-
-export const storyStatsExtended: StoryStat[] = [
-  ...storyStats,
-  {
-    headline: "Our song",
-    subtext: "The one that always makes us smile — ask us at the wedding!",
-    accent: "green",
-  },
-  {
-    headline: "Favorite tradition",
-    subtext: "Sunday mornings, good food, and nowhere to be.",
+    headline: "1,707",
+    subtext: "Miles driven moving across the country.",
     accent: "accent",
   },
   {
-    headline: "What's next",
-    subtext: "Building a home, making memories, and saying yes to every adventure.",
+    headline: "6",
+    subtext: "Ski day-trips taken across Minnesota.",
     accent: "cream",
   },
+  {
+    headline: "7",
+    subtext: "Trips taken together.",
+    accent: "accent",
+  }
 ];
