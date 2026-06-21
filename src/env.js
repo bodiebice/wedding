@@ -10,6 +10,7 @@ export const env = createEnv({
     // Accept Prisma Accelerate schemes (e.g., prisma+postgres://) and standard URLs
     DATABASE_URL: z.string(),
     DIRECT_URL: z.string().optional(),
+    ADMIN_PASSWORD: z.string().min(8).optional(),
     NODE_ENV: z
       .enum(["development", "test", "production"])
       .default("development"),
@@ -32,6 +33,7 @@ export const env = createEnv({
     DATABASE_URL: process.env.DATABASE_URL,
     NODE_ENV: process.env.NODE_ENV,
     DIRECT_URL: process.env.DIRECT_URL,
+    ADMIN_PASSWORD: process.env.ADMIN_PASSWORD,
     // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
   },
   /**

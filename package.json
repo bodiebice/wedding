@@ -13,6 +13,7 @@
     "db:studio": "prisma studio",
     "db:seed": "prisma db seed",
     "db:populate-invites": "tsx scripts/populate-invites-from-csv.ts",
+    "db:trim-guests": "tsx scripts/trim-invite-guests-beyond.ts",
     "dev": "next dev --turbo",
     "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,mdx}\" --cache",
     "format:write": "prettier --write \"**/*.{ts,tsx,js,jsx,mdx}\" --cache",

@@ -7,10 +7,14 @@
  * need to use are documented accordingly near the end.
  */
 import type { PrismaClient } from "@prisma/client";
-import { initTRPC } from "@trpc/server";
+import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
 import { ZodError } from "zod";
 
+import {
+  isValidAdminSession,
+  parseSessionCookie,
+} from "~/lib/admin-auth";
 import { db } from "~/server/db";
 
 export type TRPCContext = {
@@ -110,3 +114,20 @@ const timingMiddleware = t.middleware(async ({ next, path }) => {
  * are logged in.
  */
 export const publicProcedure = t.procedure.use(timingMiddleware);
+
+const adminMiddleware = t.middleware(async ({ ctx, next }) => {
+  const session = parseSessionCookie(ctx.headers.get("cookie"));
+
+  if (!isValidAdminSession(session)) {
+    throw new TRPCError({
+      code: "UNAUTHORIZED",
+      message: "Admin access required.",
+    });
+  }
+
+  return next();
+});
+
+export const adminProcedure = t.procedure
+  .use(timingMiddleware)
+  .use(adminMiddleware);

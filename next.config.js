@@ -5,6 +5,21 @@
 import "./src/env.js";
 
 /** @type {import("next").NextConfig} */
-const config = {};
+const config = {
+  async redirects() {
+    return [
+      {
+        source: "/savethedate",
+        destination: "/#when",
+        permanent: false,
+      },
+      {
+        source: "/save-the-date",
+        destination: "/#when",
+        permanent: false,
+      },
+    ];
+  },
+};
 
 export default config;
