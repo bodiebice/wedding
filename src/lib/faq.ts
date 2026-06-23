@@ -28,6 +28,11 @@ export const faqItems: FaqItem[] = [
     question: "Where should I stay?",
     answer:
       "We recommend hotels in Mankato or Owatonna — see our hotel recommendations in the wedding details section above.",
+  }, 
+  {
+    question: "What should I know about a Catholic wedding?",
+    answer:
+      "Our ceremony will include a full Nuptial Mass, which is the highest form of the Catholic marriage rite and typically lasts about 60–90 minutes. The Mass follows a sacred, structured order of prayer, Scripture readings, and the Eucharist. Non-Catholics are warmly welcome to participate in the responses and hymns, though they are asked to refrain from receiving Holy Communion, as it is reserved for Catholics in a state of grace. Come with an open heart, and don't worry about doing everything perfectly, your presence and joy are what matter most to us!",
   },
   {
     question: "How do I RSVP?",
