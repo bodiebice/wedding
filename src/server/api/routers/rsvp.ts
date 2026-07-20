@@ -138,6 +138,10 @@ export const rsvpRouter = createTRPCRouter({
             })),
           });
         }
+
+        await db.rsvpSubmissionEvent.create({
+          data: { partyId: party.id },
+        });
       });
 
       return { ok: true as const };

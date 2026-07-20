@@ -7,7 +7,16 @@ import { api } from "~/trpc/react";
 
 type AdminRsvpData = RouterOutputs["admin"]["listRsvps"];
 type PartyRow = AdminRsvpData["parties"][number];
-type Filter = "all" | "pending" | "responded" | "partial";
+type Filter =
+  | "all"
+  | "pending"
+  | "responded"
+  | "partial"
+  | "last24h"
+  | "lastWeek";
+
+const MS_PER_HOUR = 60 * 60 * 1000;
+const MS_PER_DAY = 24 * MS_PER_HOUR;
 
 const statusLabels: Record<PartyRow["status"], string> = {
   pending: "Not yet responded",
@@ -26,6 +35,38 @@ const guestStatusLabels = {
   attending: "Attending",
   declined: "Declined",
 } as const;
+
+function isWithinWindow(
+  iso: string | null,
+  windowMs: number,
+  now: number,
+): boolean {
+  if (!iso) return false;
+  return new Date(iso).getTime() >= now - windowMs;
+}
+
+function formatRespondedAt(iso: string): string {
+  const date = new Date(iso);
+  const deltaMs = Date.now() - date.getTime();
+
+  if (deltaMs < MS_PER_HOUR) {
+    const mins = Math.max(1, Math.round(deltaMs / (60 * 1000)));
+    return `${mins}m ago`;
+  }
+  if (deltaMs < MS_PER_DAY) {
+    const hours = Math.round(deltaMs / MS_PER_HOUR);
+    return `${hours}h ago`;
+  }
+  if (deltaMs < 7 * MS_PER_DAY) {
+    const days = Math.round(deltaMs / MS_PER_DAY);
+    return `${days}d ago`;
+  }
+
+  return date.toLocaleDateString(undefined, {
+    month: "short",
+    day: "numeric",
+  });
+}
 
 function SummaryCard({
   label,
@@ -60,9 +101,21 @@ export default function RsvpDashboard({
 
   const filteredParties = useMemo(() => {
     const term = search.trim().toLowerCase();
+    const now = Date.now();
 
-    return data.parties.filter((party) => {
-      if (filter !== "all" && party.status !== filter) return false;
+    const matches = data.parties.filter((party) => {
+      if (filter === "last24h") {
+        if (!isWithinWindow(party.lastRespondedAt, MS_PER_DAY, now)) {
+          return false;
+        }
+      } else if (filter === "lastWeek") {
+        if (!isWithinWindow(party.lastRespondedAt, 7 * MS_PER_DAY, now)) {
+          return false;
+        }
+      } else if (filter !== "all" && party.status !== filter) {
+        return false;
+      }
+
       if (!term) return true;
 
       const haystack = [
@@ -76,6 +129,20 @@ export default function RsvpDashboard({
 
       return haystack.includes(term);
     });
+
+    if (filter === "last24h" || filter === "lastWeek") {
+      return [...matches].sort((a, b) => {
+        const aTime = a.lastRespondedAt
+          ? new Date(a.lastRespondedAt).getTime()
+          : 0;
+        const bTime = b.lastRespondedAt
+          ? new Date(b.lastRespondedAt).getTime()
+          : 0;
+        return bTime - aTime;
+      });
+    }
+
+    return matches;
   }, [data.parties, filter, search]);
 
   const handleLogout = async () => {
@@ -106,11 +173,19 @@ export default function RsvpDashboard({
         </button>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-6">
         <SummaryCard label="Total invitations" value={data.summary.totalParties} />
         <SummaryCard label="Responded" value={data.summary.respondedParties} />
         <SummaryCard label="Not yet responded" value={data.summary.pendingParties} />
         <SummaryCard label="Guests attending" value={data.summary.attendingGuests} />
+        <SummaryCard
+          label="Responded last 24h"
+          value={data.summary.respondedInLast24h}
+        />
+        <SummaryCard
+          label="Responded last week"
+          value={data.summary.respondedInLastWeek}
+        />
       </div>
 
       <div className="rounded-[2rem] border-2 border-wedding-ink/10 bg-white p-6 text-wedding-ink shadow-xl sm:p-8">
@@ -119,6 +194,8 @@ export default function RsvpDashboard({
             {(
               [
                 ["all", "All"],
+                ["last24h", "Last 24 hours"],
+                ["lastWeek", "Last week"],
                 ["pending", "Not responded"],
                 ["responded", "Responded"],
                 ["partial", "Partial"],
@@ -158,6 +235,7 @@ export default function RsvpDashboard({
                 <th className="px-3 py-3 font-medium">Invitation</th>
                 <th className="px-3 py-3 font-medium">Code</th>
                 <th className="px-3 py-3 font-medium">Status</th>
+                <th className="px-3 py-3 font-medium">Last response</th>
                 <th className="px-3 py-3 font-medium">Headcount</th>
                 <th className="px-3 py-3 font-medium">Guests</th>
               </tr>
@@ -166,7 +244,7 @@ export default function RsvpDashboard({
               {filteredParties.length === 0 ? (
                 <tr>
                   <td
-                    colSpan={5}
+                    colSpan={6}
                     className="px-3 py-8 text-center text-wedding-muted"
                   >
                     No invitations match your filters.
@@ -198,6 +276,15 @@ export default function RsvpDashboard({
                             {statusLabels[party.status]}
                           </span>
                         </td>
+                        <td className="px-3 py-4 text-wedding-muted">
+                          {party.lastRespondedAt ? (
+                            <span title={new Date(party.lastRespondedAt).toLocaleString()}>
+                              {formatRespondedAt(party.lastRespondedAt)}
+                            </span>
+                          ) : (
+                            "—"
+                          )}
+                        </td>
                         <td className="px-3 py-4 text-wedding-ink">
                           {party.attendingCount} attending
                           {party.declinedCount > 0
@@ -223,7 +310,7 @@ export default function RsvpDashboard({
                       </tr>
                       {isExpanded ? (
                         <tr className="bg-wedding-cream/40">
-                          <td colSpan={5} className="px-3 py-4">
+                          <td colSpan={6} className="px-3 py-4">
                             <div className="grid gap-3 sm:grid-cols-2">
                               {party.guests.map((guest) => (
                                 <div
@@ -276,7 +363,8 @@ export default function RsvpDashboard({
         <p className="mt-4 text-xs text-wedding-muted">
           Auto-refreshes every 30 seconds. Declined guests:{" "}
           {data.summary.declinedGuests}. Guests with no response yet:{" "}
-          {data.summary.pendingGuests}.
+          {data.summary.pendingGuests}. Recent filters use submission times
+          recorded from when this feature launched onward.
         </p>
       </div>
     </div>

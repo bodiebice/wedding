@@ -19,15 +19,35 @@ function getGuestStatus(isAttending: boolean | null): GuestRsvpStatus {
   return "pending";
 }
 
+const MS_PER_HOUR = 60 * 60 * 1000;
+const MS_PER_DAY = 24 * MS_PER_HOUR;
+
 export const adminRouter = createTRPCRouter({
   listRsvps: adminProcedure.query(async ({ ctx }) => {
-    const parties = await ctx.db.inviteParty.findMany({
-      include: {
-        guests: { orderBy: { sortOrder: "asc" } },
-        extraGuests: { orderBy: { sortOrder: "asc" } },
-      },
-      orderBy: [{ displayName: "asc" }, { inviteCode: "asc" }],
-    });
+    const [parties, latestSubmissions] = await Promise.all([
+      ctx.db.inviteParty.findMany({
+        include: {
+          guests: { orderBy: { sortOrder: "asc" } },
+          extraGuests: { orderBy: { sortOrder: "asc" } },
+        },
+        orderBy: [{ displayName: "asc" }, { inviteCode: "asc" }],
+      }),
+      ctx.db.rsvpSubmissionEvent.groupBy({
+        by: ["partyId"],
+        _max: { createdAt: true },
+      }),
+    ]);
+
+    const lastRespondedAtByParty = new Map(
+      latestSubmissions.map((row) => [
+        row.partyId,
+        row._max.createdAt?.toISOString() ?? null,
+      ]),
+    );
+
+    const now = Date.now();
+    const cutoff24h = now - MS_PER_DAY;
+    const cutoffWeek = now - 7 * MS_PER_DAY;
 
     const rows = parties.map((party) => {
       const status = getPartyStatus(party.guests);
@@ -37,12 +57,14 @@ export const adminRouter = createTRPCRouter({
       const declinedCount = party.guests.filter(
         (g) => g.isAttending === false,
       ).length;
+      const lastRespondedAt = lastRespondedAtByParty.get(party.id) ?? null;
 
       return {
         id: party.id,
         inviteCode: party.inviteCode,
         displayName: party.displayName,
         status,
+        lastRespondedAt,
         attendingCount,
         declinedCount,
         guestCount: party.guests.length,
@@ -62,6 +84,15 @@ export const adminRouter = createTRPCRouter({
       };
     });
 
+    const respondedInLast24h = rows.filter((r) => {
+      if (!r.lastRespondedAt) return false;
+      return new Date(r.lastRespondedAt).getTime() >= cutoff24h;
+    }).length;
+    const respondedInLastWeek = rows.filter((r) => {
+      if (!r.lastRespondedAt) return false;
+      return new Date(r.lastRespondedAt).getTime() >= cutoffWeek;
+    }).length;
+
     const summary = {
       totalParties: rows.length,
       pendingParties: rows.filter((r) => r.status === "pending").length,
@@ -74,6 +105,8 @@ export const adminRouter = createTRPCRouter({
           sum + r.guests.filter((g) => g.status === "pending").length,
         0,
       ),
+      respondedInLast24h,
+      respondedInLastWeek,
     };
 
     return { summary, parties: rows };

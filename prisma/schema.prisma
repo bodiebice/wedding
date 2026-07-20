@@ -46,3 +46,14 @@ model AddressSubmission {
   addressText String
   createdAt   DateTime @default(now())
 }
+
+/// Append-only log of RSVP form submissions. Does not alter party/guest rows.
+/// Used by the admin dashboard for "responded in last 24h / week" filters.
+model RsvpSubmissionEvent {
+  id        String   @id @default(uuid())
+  partyId   String
+  createdAt DateTime @default(now())
+
+  @@index([partyId])
+  @@index([createdAt])
+}
