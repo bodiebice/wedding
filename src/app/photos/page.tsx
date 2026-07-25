@@ -3,6 +3,7 @@ import Link from "next/link";
 import SiteFooter from "../_components/SiteFooter";
 import SiteNav from "../_components/SiteNav";
 import PhotoGallery from "../_components/sections/PhotoGallery";
+import { arePhotoUploadsEnabled } from "~/lib/photo-uploads";
 
 export const metadata: Metadata = {
   title: "Wedding Photos | Bodie & Abby's Wedding",
@@ -10,11 +11,13 @@ export const metadata: Metadata = {
 };
 
 export default function PhotosPage() {
+  const uploadsEnabled = arePhotoUploadsEnabled();
+
   return (
     <>
       <SiteNav />
       <main className="min-h-screen px-4 py-12 sm:px-6 sm:py-16">
-        <PhotoGallery />
+        <PhotoGallery uploadsEnabled={uploadsEnabled} />
 
         <p className="mx-auto mt-10 max-w-4xl text-center">
           <Link
