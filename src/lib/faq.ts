@@ -37,6 +37,6 @@ export const faqItems: FaqItem[] = [
   {
     question: "How do I RSVP?",
     answer:
-      "Use the RSVP button and enter the invite code from your invitation. If you need help, reach out to us directlyand we'll get you sorted.",
+      "Use the RSVP button and enter the invite code from your invitation. Please respond by September 5, 2026 at midnight Central Time — after that you can still view your response, but changes will need to go through us. If you need help, reach out to us directly and we'll get you sorted.",
   },
 ];

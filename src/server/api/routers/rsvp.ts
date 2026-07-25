@@ -6,6 +6,10 @@ import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 
 import { normalizeInviteCode } from "~/lib/invite-code";
+import {
+  isRsvpOpen,
+  rsvpDeadlineLabel,
+} from "~/lib/wedding-details";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 
 const guestLineInput = z.object({
@@ -41,6 +45,7 @@ export const rsvpRouter = createTRPCRouter({
       return {
         displayName: party.displayName,
         maxExtraGuests: party.maxExtraGuests,
+        editsLocked: !isRsvpOpen(),
         guests: party.guests.map((g: InvitePartyGuest) => ({
           id: g.id,
           displayName: g.displayName,
@@ -64,6 +69,13 @@ export const rsvpRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ ctx, input }) => {
+      if (!isRsvpOpen()) {
+        throw new TRPCError({
+          code: "FORBIDDEN",
+          message: `RSVPs closed on ${rsvpDeadlineLabel}. You can still view your response with your invite code.`,
+        });
+      }
+
       const code = normalizeInviteCode(input.inviteCode);
       const party = await ctx.db.inviteParty.findUnique({
         where: { inviteCode: code },

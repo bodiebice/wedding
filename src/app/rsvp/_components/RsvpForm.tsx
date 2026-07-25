@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { normalizeInviteCode } from "~/lib/invite-code";
+import { rsvpDeadlineLabel } from "~/lib/wedding-details";
 import { api, type RouterOutputs } from "~/trpc/react";
 
 type RsvpLookupGuest = RouterOutputs["rsvp"]["lookup"]["guests"][number];
@@ -95,7 +96,7 @@ export default function RsvpForm() {
   };
 
   const addExtraRow = () => {
-    if (!lookup.data) return;
+    if (!lookup.data || lookup.data.editsLocked) return;
     if (extraRows.length >= lookup.data.maxExtraGuests) return;
     setExtraRows((prev) => [
       ...prev,
@@ -108,12 +109,13 @@ export default function RsvpForm() {
   };
 
   const removeExtraRow = (localKey: string) => {
+    if (lookup.data?.editsLocked) return;
     setExtraRows((prev) => prev.filter((r) => r.localKey !== localKey));
   };
 
   const handleSubmitRsvp = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!lookupCode || !lookup.data) return;
+    if (!lookupCode || !lookup.data || lookup.data.editsLocked) return;
 
     const unset = guestRows.filter((r) => r.isAttending === null);
     if (unset.length > 0) {
@@ -150,11 +152,14 @@ export default function RsvpForm() {
   };
 
   const inputClass =
-    "w-full rounded-xl border-2 border-neutral-200 bg-white px-4 py-3 font-serif text-wedding-ink placeholder:text-wedding-muted focus:outline-none focus:ring-2 focus:ring-wedding-green";
+    "w-full rounded-xl border-2 border-neutral-200 bg-white px-4 py-3 font-serif text-wedding-ink placeholder:text-wedding-muted focus:outline-none focus:ring-2 focus:ring-wedding-green disabled:cursor-not-allowed disabled:bg-neutral-50 disabled:text-wedding-muted";
 
   const showForm = lookup.isSuccess && lookup.data;
+  const editsLocked = lookup.data?.editsLocked ?? false;
   const maxExtra = lookup.data?.maxExtraGuests ?? 0;
-  const canAddExtra = maxExtra > 0 && extraRows.length < maxExtra;
+  const canAddExtra =
+    !editsLocked && maxExtra > 0 && extraRows.length < maxExtra;
+  const showExtrasSection = maxExtra > 0 && (!editsLocked || extraRows.length > 0);
 
   return (
     <div className="space-y-8">
@@ -216,6 +221,15 @@ export default function RsvpForm() {
                 {lookup.data.displayName}
               </p>
             ) : null}
+            {editsLocked ? (
+              <p
+                className="mt-4 rounded-xl border border-wedding-ink/20 bg-wedding-cream/60 px-4 py-3 font-serif text-sm text-wedding-ink"
+                role="status"
+              >
+                RSVPs closed on {rsvpDeadlineLabel}. You can still view your
+                response below — please email us if you need a change.
+              </p>
+            ) : null}
           </div>
 
           <div className="space-y-6">
@@ -240,10 +254,12 @@ export default function RsvpForm() {
                     }
                     className={inputClass}
                     required
+                    disabled={editsLocked}
+                    readOnly={editsLocked}
                   />
                 </div>
 
-                <fieldset>
+                <fieldset disabled={editsLocked}>
                   <legend className="mb-2 block text-sm font-medium text-wedding-ink">
                     Attending?
                   </legend>
@@ -254,7 +270,7 @@ export default function RsvpForm() {
                         name={`attending-${row.id}`}
                         checked={row.isAttending === true}
                         onChange={() => updateRow(row.id, { isAttending: true })}
-                        className="text-wedding-green focus:ring-wedding-green"
+                        className="text-wedding-green focus:ring-wedding-green disabled:cursor-not-allowed"
                       />
                       Yes
                     </label>
@@ -266,10 +282,15 @@ export default function RsvpForm() {
                         onChange={() =>
                           updateRow(row.id, { isAttending: false })
                         }
-                        className="text-wedding-green focus:ring-wedding-green"
+                        className="text-wedding-green focus:ring-wedding-green disabled:cursor-not-allowed"
                       />
                       No
                     </label>
+                    {editsLocked && row.isAttending === null ? (
+                      <span className="text-sm text-wedding-muted">
+                        No response recorded
+                      </span>
+                    ) : null}
                   </div>
                 </fieldset>
 
@@ -288,33 +309,39 @@ export default function RsvpForm() {
                       updateRow(row.id, { allergies: e.target.value })
                     }
                     className={inputClass}
-                    placeholder="None"
+                    placeholder={editsLocked ? "None noted" : "None"}
+                    disabled={editsLocked}
+                    readOnly={editsLocked}
                   />
                 </div>
               </div>
             ))}
           </div>
 
-          {maxExtra > 0 ? (
+          {showExtrasSection ? (
             <div className="space-y-4 rounded-2xl border-2 border-dashed border-neutral-300 p-4">
               <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
                 <div>
                   <h3 className="text-sm font-medium text-wedding-ink">
                     Additional guests
                   </h3>
-                  <p className="text-sm text-wedding-muted">
-                    Anyone joining you who isn&apos;t listed above — add up to{" "}
-                    {maxExtra}. Include their name and any dietary needs.
-                  </p>
+                  {!editsLocked ? (
+                    <p className="text-sm text-wedding-muted">
+                      Anyone joining you who isn&apos;t listed above — add up to{" "}
+                      {maxExtra}. Include their name and any dietary needs.
+                    </p>
+                  ) : null}
                 </div>
-                <button
-                  type="button"
-                  onClick={addExtraRow}
-                  disabled={!canAddExtra || submit.isPending}
-                  className="shrink-0 rounded-full border-2 border-wedding-green px-4 py-2 text-sm font-medium text-wedding-green transition hover:bg-wedding-green/10 disabled:opacity-50"
-                >
-                  Add guest
-                </button>
+                {!editsLocked ? (
+                  <button
+                    type="button"
+                    onClick={addExtraRow}
+                    disabled={!canAddExtra || submit.isPending}
+                    className="shrink-0 rounded-full border-2 border-wedding-green px-4 py-2 text-sm font-medium text-wedding-green transition hover:bg-wedding-green/10 disabled:opacity-50"
+                  >
+                    Add guest
+                  </button>
+                ) : null}
               </div>
 
               {extraRows.length === 0 ? (
@@ -332,14 +359,16 @@ export default function RsvpForm() {
                         <span className="text-xs font-medium uppercase tracking-wide text-wedding-muted">
                           Extra guest {idx + 1}
                         </span>
-                        <button
-                          type="button"
-                          onClick={() => removeExtraRow(row.localKey)}
-                          disabled={submit.isPending}
-                          className="text-sm text-red-600 hover:text-red-700 disabled:opacity-50"
-                        >
-                          Remove
-                        </button>
+                        {!editsLocked ? (
+                          <button
+                            type="button"
+                            onClick={() => removeExtraRow(row.localKey)}
+                            disabled={submit.isPending}
+                            className="text-sm text-red-600 hover:text-red-700 disabled:opacity-50"
+                          >
+                            Remove
+                          </button>
+                        ) : null}
                       </div>
                       <div>
                         <label
@@ -359,6 +388,8 @@ export default function RsvpForm() {
                           }
                           className={inputClass}
                           placeholder="Required if bringing this guest"
+                          disabled={editsLocked}
+                          readOnly={editsLocked}
                         />
                       </div>
                       <div>
@@ -378,7 +409,9 @@ export default function RsvpForm() {
                             })
                           }
                           className={inputClass}
-                          placeholder="None"
+                          placeholder={editsLocked ? "None noted" : "None"}
+                          disabled={editsLocked}
+                          readOnly={editsLocked}
                         />
                       </div>
                     </div>
@@ -394,13 +427,15 @@ export default function RsvpForm() {
             </p>
           ) : null}
 
-          <button
-            type="submit"
-            disabled={submit.isPending}
-            className="w-full rounded-full bg-wedding-green px-8 py-3.5 font-serif font-semibold text-white transition hover:bg-wedding-green-hover disabled:opacity-50 sm:w-auto"
-          >
-            {submit.isPending ? "Saving…" : "Submit RSVP"}
-          </button>
+          {!editsLocked ? (
+            <button
+              type="submit"
+              disabled={submit.isPending}
+              className="w-full rounded-full bg-wedding-green px-8 py-3.5 font-serif font-semibold text-white transition hover:bg-wedding-green-hover disabled:opacity-50 sm:w-auto"
+            >
+              {submit.isPending ? "Saving…" : "Submit RSVP"}
+            </button>
+          ) : null}
         </form>
       ) : null}
     </div>
