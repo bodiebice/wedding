@@ -34,6 +34,14 @@ export const weddingVenue = {
   dateISO: "2026-10-17T14:00:00-05:00",
 } as const;
 
+/** End of September 5, 2026 — midnight Central (CDT, UTC−5). */
+export const rsvpDeadlineISO = "2026-09-06T00:00:00-05:00";
+export const rsvpDeadlineLabel = "September 5, 2026 at midnight Central Time";
+
+export function isRsvpOpen(now: Date = new Date()): boolean {
+  return now.getTime() < new Date(rsvpDeadlineISO).getTime();
+}
+
 export const weddingSchedule: ScheduleItem[] = [
   { time: "2:00", label: "Ceremony", icon: "church" },
   { time: "3:30", label: "Cocktail hour", icon: "cheers" },

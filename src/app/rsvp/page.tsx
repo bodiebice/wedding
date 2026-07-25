@@ -29,6 +29,9 @@ export default function RsvpPage() {
             <p className="mt-1 font-serif text-wedding-cream/80">
               Sacred Heart Catholic Church, Waseca, MN
             </p>
+            <p className="mt-4 font-serif text-sm text-wedding-cream/75">
+              Please respond by September 5, 2026 at midnight Central Time.
+            </p>
           </div>
 
           <RsvpForm />
