@@ -11,6 +11,10 @@ export const env = createEnv({
     DATABASE_URL: z.string(),
     DIRECT_URL: z.string().optional(),
     ADMIN_PASSWORD: z.string().min(8).optional(),
+    /** Set to "true" when guest photo uploads should go live. */
+    PHOTO_UPLOADS_ENABLED: z.enum(["true", "false"]).default("false"),
+    /** From the UploadThing dashboard. Required when PHOTO_UPLOADS_ENABLED=true. */
+    UPLOADTHING_TOKEN: z.string().optional(),
     NODE_ENV: z
       .enum(["development", "test", "production"])
       .default("development"),
@@ -34,6 +38,8 @@ export const env = createEnv({
     NODE_ENV: process.env.NODE_ENV,
     DIRECT_URL: process.env.DIRECT_URL,
     ADMIN_PASSWORD: process.env.ADMIN_PASSWORD,
+    PHOTO_UPLOADS_ENABLED: process.env.PHOTO_UPLOADS_ENABLED,
+    UPLOADTHING_TOKEN: process.env.UPLOADTHING_TOKEN,
     // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
   },
   /**
