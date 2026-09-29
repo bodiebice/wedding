@@ -1,11 +1,15 @@
 import "~/styles/globals.css";
 
+import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
 import { type Metadata } from "next";
 import { Alex_Brush, Geist, Playfair_Display } from "next/font/google";
+import { extractRouterConfig } from "uploadthing/server";
 
+import { ourFileRouter } from "~/app/api/uploadthing/core";
 import { TRPCReactProvider } from "~/trpc/react";
-import { Analytics } from "@vercel/analytics/next"
-import { SpeedInsights } from "@vercel/speed-insights/next"
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+
 export const metadata: Metadata = {
   title: "Bodie & Abby's Wedding",
   description: "Join us as we celebrate our special day! October 17th, 2026.",
@@ -37,6 +41,7 @@ export default function RootLayout({
       className={`${geist.variable} ${playfair.variable} ${alexBrush.variable}`}
     >
       <body className="min-h-dvh bg-wedding-green font-sans text-white antialiased">
+        <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
         <TRPCReactProvider>{children}</TRPCReactProvider>
         <Analytics />
         <SpeedInsights />

@@ -7,8 +7,11 @@ import PhotoGallery from "./_components/sections/PhotoGallery";
 import QuickActions from "./_components/sections/QuickActions";
 import WeddingDetailsGrid from "./_components/sections/WeddingDetailsGrid";
 import WhenWhereSection from "./_components/sections/WhenWhereSection";
+import { arePhotoUploadsEnabled } from "~/lib/photo-uploads";
 
 export default function Home() {
+  const uploadsEnabled = arePhotoUploadsEnabled();
+
   return (
     <>
       <SiteNav />
@@ -112,7 +115,7 @@ export default function Home() {
 
             <FaqSection />
 
-            <PhotoGallery compact />
+            <PhotoGallery compact uploadsEnabled={uploadsEnabled} />
           </div>
 
           <SiteFooter />
