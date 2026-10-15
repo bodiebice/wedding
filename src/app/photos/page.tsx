@@ -6,8 +6,8 @@ import PhotoGallery from "../_components/sections/PhotoGallery";
 import { arePhotoUploadsEnabled } from "~/lib/photo-uploads";
 
 export const metadata: Metadata = {
-  title: "Wedding Photos | Bodie & Abby's Wedding",
-  description: "Share and browse photos from Bodie and Abby's wedding.",
+  title: "Share Photos | Bodie & Abby's Wedding",
+  description: "Share photos from Bodie and Abby's wedding.",
 };
 
 export default function PhotosPage() {

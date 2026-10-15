@@ -1,6 +1,5 @@
 import { adminRouter } from "~/server/api/routers/admin";
 import { addressesRouter } from "~/server/api/routers/addresses";
-import { photosRouter } from "~/server/api/routers/photos";
 import { rsvpRouter } from "~/server/api/routers/rsvp";
 import { createCallerFactory, createTRPCRouter } from "~/server/api/trpc";
 
@@ -12,7 +11,6 @@ import { createCallerFactory, createTRPCRouter } from "~/server/api/trpc";
 export const appRouter = createTRPCRouter({
   admin: adminRouter,
   addresses: addressesRouter,
-  photos: photosRouter,
   rsvp: rsvpRouter,
 });
 
