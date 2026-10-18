@@ -2,6 +2,7 @@ import { type Metadata } from "next";
 
 import RsvpForm from "~/app/rsvp/_components/RsvpForm";
 import { HydrateClient } from "~/trpc/server";
+import WeddingDetailsGrid from "../_components/sections/WeddingDetailsGrid";
 
 export const metadata: Metadata = {
   title: "RSVP | Bodie & Abby's Wedding",
@@ -30,11 +31,11 @@ export default function RsvpPage() {
               Sacred Heart Catholic Church, Waseca, MN
             </p>
             <p className="mt-4 font-serif text-sm text-wedding-cream/75">
-              Please respond by September 5, 2026 at midnight Central Time.
+              RSVPs are closed, Please reach out to Abby or Bodie directly if you have any questions about your RSVP.
             </p>
           </div>
 
-          <RsvpForm />
+          {/* <RsvpForm /> */}
 
           <p className="mt-12 text-center text-sm text-white/80">
             Questions?{" "}
